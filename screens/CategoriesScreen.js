@@ -1,13 +1,6 @@
 import React from "react";
-import {
-  FlatList,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import Colors from "../constant/Colors";
+import { FlatList, StyleSheet } from "react-native";
+import CategoryGridTile from "../components/CategoryGridTile";
 import { CATEGORIES } from "../data/dummy-data";
 
 const CategoriesScreen = (props) => {
@@ -16,16 +9,16 @@ const CategoriesScreen = (props) => {
   const renderGridItem = (itemData) => {
     const { item } = itemData;
     return (
-      <TouchableOpacity
-        style={styles.gridItem}
-        onPress={() => {
-          navigation.navigate({ routeName: "CategoryMeals" });
+      <CategoryGridTile
+        title={item.title}
+        color={item.color}
+        onSelect={() => {
+          navigation.navigate({
+            routeName: "CategoryMeals",
+            params: { categoryId: item.id },
+          });
         }}
-      >
-        <View>
-          <Text>{item.title}</Text>
-        </View>
-      </TouchableOpacity>
+      />
     );
   };
 
@@ -34,24 +27,11 @@ const CategoriesScreen = (props) => {
   );
 };
 
-CategoriesScreen.navigationOptions = {
-  title: "Meal Categories",
-  headerStyle: {
-    backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
-  },
-  headerTintColor: Platform.OS === "android" ? "#fff" : Colors.primaryColor,
-};
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  gridItem: {
-    flex: 1,
-    margin: 15,
-    height: 150,
   },
 });
 
